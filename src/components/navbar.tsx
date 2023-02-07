@@ -1,3 +1,9 @@
+import { Box } from "@chakra-ui/react";
+
 export default function NavBar() {
-  return <div>NavBar</div>;
+  return (
+    <Box bg="teal" w="100%" p={4} color="white">
+      NavBar
+    </Box>
+  );
 }
