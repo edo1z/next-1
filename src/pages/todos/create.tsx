@@ -1,4 +1,5 @@
-import { withAuthenticator } from "@aws-amplify/ui-react";
+import { Authenticator } from "@aws-amplify/ui-react";
+import { API } from "aws-amplify";
 import { createTodo } from "@/graphql/mutations";
 import "@aws-amplify/ui-react/styles.css";
 import { Text, Input, Textarea, Button } from "@chakra-ui/react";
@@ -10,25 +11,39 @@ interface Props {
 }
 
 interface TodoFormInput {
-  title: string;
+  name: string;
   description: string;
 }
 
-function CreateTodo({ user }: Props) {
+export default function CreateTodo({ user }: Props) {
   const { register, handleSubmit } = useForm<TodoFormInput>();
-  const onSubmit: SubmitHandler<TodoFormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<TodoFormInput> = async (data) => {
+    try {
+      const result = await API.graphql({
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+        query: createTodo,
+        variables: {
+          input: data,
+        },
+      });
+      console.log("createTodo Result", result);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Text mb="8px">Title</Text>
-      <Input {...register("title")} />
-      <Text mb="8px" mt="10px">
-        Description
-      </Text>
-      <Textarea {...register("description")} />
-      <Button colorScheme="teal" mt="20px" type="submit">
-        保存
-      </Button>
-    </form>
+    <Authenticator>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Text mb="8px">Title</Text>
+        <Input {...register("name")} />
+        <Text mb="8px" mt="10px">
+          Description
+        </Text>
+        <Textarea {...register("description")} />
+        <Button colorScheme="teal" mt="20px" type="submit">
+          保存
+        </Button>
+      </form>
+    </Authenticator>
   );
 }
-export default withAuthenticator(CreateTodo);
