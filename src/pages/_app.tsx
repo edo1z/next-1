@@ -5,8 +5,9 @@ import { Amplify } from "aws-amplify";
 import { Authenticator } from "@aws-amplify/ui-react";
 import awsExports from "@/aws-exports";
 import hub from "@/hub";
-Amplify.configure({ ...awsExports, ssr: true });
 import { RecoilRoot } from "recoil";
+
+Amplify.configure({ ...awsExports, ssr: true });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   hub();

@@ -3,7 +3,6 @@ import { Hub, Logger } from "aws-amplify";
 const logger = new Logger("My-Logger");
 
 const listener = (data: any) => {
-  console.log("event", data.payload.event);
   switch (data.payload.event) {
     case "configured":
       logger.info("the Auth module is configured");

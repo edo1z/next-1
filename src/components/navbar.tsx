@@ -1,25 +1,22 @@
 import { Flex, Spacer, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { Auth } from "aws-amplify";
 import { useRouter } from "next/router";
 
 export default function NavBar() {
-  const { authStatus } = useAuthenticator((context) => [context.authStatus]);
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
   const router = useRouter();
-  const logout = async () => {
-    await Auth.signOut();
-    router.push("/");
-  };
-  const login = () => {
-    router.push("/login");
-  };
-  let authBtn = null;
-  const logoutBtn = <Button onClick={logout}>Log out</Button>;
-  const loginBtn = <Button onClick={login}>Log in</Button>;
-  if (authStatus !== "configuring") {
-    authBtn = authStatus === "authenticated" ? logoutBtn : loginBtn;
-  }
+  const logoutBtn = (
+    <Button colorScheme="teal" onClick={signOut}>
+      Log out
+    </Button>
+  );
+  const loginBtn = (
+    <Button colorScheme="teal" onClick={() => router.push("/login")}>
+      Log in
+    </Button>
+  );
+  const authBtn = user ? logoutBtn : loginBtn;
 
   return (
     <Flex
