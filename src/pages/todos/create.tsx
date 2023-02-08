@@ -1,11 +1,13 @@
-import { Button } from "@chakra-ui/react";
-import "@aws-amplify/ui-react/styles.css";
-import { Authenticator } from "@aws-amplify/ui-react";
-import { Amplify, API, Auth, withSSRContext } from "aws-amplify";
-import awsExports from "@/aws-exports";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 import { createTodo } from "@/graphql/mutations";
+import "@aws-amplify/ui-react/styles.css";
 
-export default function Login() {
+interface Props {
+  signOut: React.ReactNode;
+  user: React.ReactNode;
+}
+
+function Login({ signOut, user }: Props) {
   return (
     <div>
       <div>LOGIN</div>
@@ -13,3 +15,4 @@ export default function Login() {
     </div>
   );
 }
+export default withAuthenticator(Login);

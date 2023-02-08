@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { GetServerSideProps } from "next";
-import { Amplify, API, Auth, withSSRContext } from "aws-amplify";
-import awsExports from "@/aws-exports";
+import { withSSRContext } from "aws-amplify";
 import { listTodos } from "@/graphql/queries";
-
-Amplify.configure({ ...awsExports, ssr: true });
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   console.log("server start");
