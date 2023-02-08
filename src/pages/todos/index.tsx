@@ -28,17 +28,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 export default function Hoge() {
   return (
     <div>
-      <ul>
-        <li>
-          <Link href="/todos">Todo List</Link>
-        </li>
-        <li>
-          <Link href="/todos/create">Create new todo</Link>
-        </li>
-        <li>
-          <Link href="/login">LOGIN</Link>
-        </li>
-      </ul>
+      <Link href="/login">LOGIN</Link>
     </div>
   );
 }
