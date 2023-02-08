@@ -4,6 +4,9 @@ import { Amplify, API, Auth, withSSRContext } from "aws-amplify";
 import awsExports from "@/aws-exports";
 import { listTodos } from "@/graphql/queries";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import { Divider, Box, Text } from "@chakra-ui/react";
+import { Todo as TodoType } from "@/API";
+import TodoListItem from "@/components/todoListItem";
 
 Amplify.configure({ ...awsExports, ssr: true });
 
@@ -26,7 +29,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
 };
 
-export default function Hoge() {
+interface Props {
+  todos: Array<TodoType>;
+}
+
+export default function Index({ todos }: Props) {
   const { user } = useAuthenticator((context) => [context.user]);
   return (
     <div>
@@ -45,6 +52,15 @@ export default function Hoge() {
           </li>
         )}
       </ul>
+      <Divider mt={5} />
+      <Box mt={5}>
+        <Text>Todo</Text>
+        <ul>
+          {todos.map((todo) => (
+            <TodoListItem key={todo.id} todo={todo} />
+          ))}
+        </ul>
+      </Box>
     </div>
   );
 }
