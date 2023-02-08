@@ -1,9 +1,9 @@
-import { Button } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function Hoge() {
   return (
     <div>
-      <Button>hoge</Button>
+      <Link href="/login">LOGIN</Link>
     </div>
   );
 }
